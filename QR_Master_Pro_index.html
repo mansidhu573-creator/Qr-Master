@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QR Master Pro — QR Code Generator</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#070b16;color:#fff}.wrap{max-width:1000px;margin:auto;padding:25px 16px 45px}
+header{text-align:center;padding:15px 0 25px}h1{font-size:44px;margin:0;background:linear-gradient(90deg,#00e5ff,#8b5cf6);-webkit-background-clip:text;color:transparent}header p{color:#9da8c2}
+.card{background:#11182b;border:1px solid #273451;border-radius:22px;padding:22px;box-shadow:0 20px 60px #0007}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.tab{background:#202a43;color:#dce5fb}.tab.active{background:linear-gradient(90deg,#00bde8,#7653e8);color:#fff}
+.panel{display:none}.panel.active{display:block}label{display:block;font-weight:bold;margin:12px 0 8px}input,textarea,select{width:100%;padding:13px;border:1px solid #34415e;border-radius:12px;background:#0b1120;color:#fff;font-size:15px;outline:none}textarea{min-height:110px;resize:vertical}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.actions{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}button{border:0;border-radius:12px;padding:13px 18px;font-weight:bold;cursor:pointer}.primary{background:linear-gradient(90deg,#00bde8,#7653e8);color:white;flex:1}.secondary{background:#27324b;color:white}
+.result{text-align:center;margin-top:24px;border-top:1px solid #293650;padding-top:24px}.qrbox{display:inline-block;background:#fff;padding:14px;border-radius:14px}.result button{margin:10px 5px 0;background:#16c784;color:#fff}.result .copy{background:#33405d}.hint{font-size:12px;color:#8793ae;margin-top:10px}
+footer{text-align:center;color:#68738d;margin-top:25px;font-size:13px}@media(max-width:650px){h1{font-size:35px}.grid{grid-template-columns:1fr}.tab{flex:1}}
+</style>
+</head>
+<body><div class="wrap">
+<header><h1>QR Master Pro</h1><p>Create QR codes for links, text, phone, email and Wi‑Fi</p></header>
+<div class="card">
+<div class="tabs">
+<button class="tab active" data-type="url">🔗 URL</button><button class="tab" data-type="text">📝 Text</button><button class="tab" data-type="phone">📞 Phone</button><button class="tab" data-type="email">📧 Email</button><button class="tab" data-type="wifi">📶 Wi‑Fi</button>
+</div>
+<div id="url" class="panel active"><label>Website URL</label><input id="urlInput" placeholder="https://example.com"></div>
+<div id="text" class="panel"><label>Your text</label><textarea id="textInput" placeholder="Enter any message..."></textarea></div>
+<div id="phone" class="panel"><label>Phone number</label><input id="phoneInput" placeholder="+91 9876543210"></div>
+<div id="email" class="panel"><div class="grid"><div><label>Email</label><input id="emailInput" placeholder="name@example.com"></div><div><label>Subject</label><input id="subjectInput" placeholder="Hello"></div></div><label>Message</label><textarea id="emailMsg" placeholder="Your message"></textarea></div>
+<div id="wifi" class="panel"><div class="grid"><div><label>Wi‑Fi name (SSID)</label><input id="ssid" placeholder="My WiFi"></div><div><label>Password</label><input id="pass" placeholder="Password"></div></div><label>Security</label><select id="security"><option>WPA</option><option>WEP</option><option>nopass</option></select></div>
+<div class="grid" style="margin-top:18px"><div><label>QR Color</label><input type="color" id="dark" value="#000000"></div><div><label>Background</label><input type="color" id="light" value="#ffffff"></div></div>
+<div class="actions"><button class="primary" onclick="makeQR()">Generate QR Code</button><button class="secondary" onclick="resetAll()">Clear</button></div>
+<div class="result"><div id="qr" class="qrbox"></div><br><button id="download" style="display:none" onclick="downloadQR()">⬇ Download PNG</button><button id="copy" class="copy" style="display:none" onclick="copyQR()">📋 Copy Image</button><div class="hint">Your QR is generated in your browser.</div></div>
+</div><footer>© 2026 QR Master Pro</footer></div>
+<script>
+let type='url',lastData='';
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{type=b.dataset.type;document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));document.getElementById(type).classList.add('active')});
+function val(id){return document.getElementById(id).value.trim()}
+function getData(){if(type==='url')return val('urlInput');if(type==='text')return val('textInput');if(type==='phone')return 'tel:'+val('phoneInput');if(type==='email')return 'mailto:'+val('emailInput')+'?subject='+encodeURIComponent(val('subjectInput'))+'&body='+encodeURIComponent(val('emailMsg'));if(type==='wifi')return 'WIFI:T:'+val('security')+';S:'+val('ssid')+';P:'+val('pass')+';;'}
+function makeQR(){lastData=getData();if(!lastData||((type==='url')&&!/^https?:\/\//i.test(lastData))){alert(type==='url'?'Enter a valid URL beginning with https:// or http://.':'Please enter the required information.');return}let q=document.getElementById('qr');q.innerHTML='';new QRCode(q,{text:lastData,width:240,height:240,colorDark:val('dark'),colorLight:val('light'),correctLevel:QRCode.CorrectLevel.H});document.getElementById('download').style.display='inline-block';document.getElementById('copy').style.display='inline-block'}
+function downloadQR(){let c=document.querySelector('#qr canvas');if(!c)return;let a=document.createElement('a');a.href=c.toDataURL('image/png');a.download='qr-master-pro.png';a.click()}
+async function copyQR(){let c=document.querySelector('#qr canvas');if(!c||!navigator.clipboard||!window.ClipboardItem){alert('Image copy is not supported in this browser. Use Download PNG.');return}c.toBlob(async b=>{try{await navigator.clipboard.write([new ClipboardItem({'image/png':b})]);alert('QR image copied!')}catch(e){alert('Copy failed. Please use Download PNG.')}},'image/png')}
+function resetAll(){document.querySelectorAll('input,textarea').forEach(x=>{if(x.type!=='color')x.value=''});document.getElementById('qr').innerHTML='';document.getElementById('download').style.display='none';document.getElementById('copy').style.display='none'}
+</script></body></html>
