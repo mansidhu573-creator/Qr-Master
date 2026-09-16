@@ -1,42 +1,1197 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>QR Master Pro — QR Code Generator</title>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="theme-color" content="#07111f">
+
+<title>QR Master Pro - Free QR Code Generator</title>
+
+<meta name="description" content="QR Master Pro is a free professional QR code generator. Create URL, text, phone, email and Wi-Fi QR codes instantly.">
+
+<meta name="keywords" content="QR code generator, free QR generator, QR Master Pro, WiFi QR code, URL QR code">
+
+<meta name="robots" content="index, follow">
+
+<link rel="icon" href="data:image/svg+xml,
+
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
+
+<rect width='100' height='100' rx='20' fill='%2300e5ff'/>
+
+<text x='50' y='67' font-size='55' text-anchor='middle'>QR</text>
+
+</svg>">
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#070b16;color:#fff}.wrap{max-width:1000px;margin:auto;padding:25px 16px 45px}
-header{text-align:center;padding:15px 0 25px}h1{font-size:44px;margin:0;background:linear-gradient(90deg,#00e5ff,#8b5cf6);-webkit-background-clip:text;color:transparent}header p{color:#9da8c2}
-.card{background:#11182b;border:1px solid #273451;border-radius:22px;padding:22px;box-shadow:0 20px 60px #0007}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
-.tab{background:#202a43;color:#dce5fb}.tab.active{background:linear-gradient(90deg,#00bde8,#7653e8);color:#fff}
-.panel{display:none}.panel.active{display:block}label{display:block;font-weight:bold;margin:12px 0 8px}input,textarea,select{width:100%;padding:13px;border:1px solid #34415e;border-radius:12px;background:#0b1120;color:#fff;font-size:15px;outline:none}textarea{min-height:110px;resize:vertical}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.actions{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}button{border:0;border-radius:12px;padding:13px 18px;font-weight:bold;cursor:pointer}.primary{background:linear-gradient(90deg,#00bde8,#7653e8);color:white;flex:1}.secondary{background:#27324b;color:white}
-.result{text-align:center;margin-top:24px;border-top:1px solid #293650;padding-top:24px}.qrbox{display:inline-block;background:#fff;padding:14px;border-radius:14px}.result button{margin:10px 5px 0;background:#16c784;color:#fff}.result .copy{background:#33405d}.hint{font-size:12px;color:#8793ae;margin-top:10px}
-footer{text-align:center;color:#68738d;margin-top:25px;font-size:13px}@media(max-width:650px){h1{font-size:35px}.grid{grid-template-columns:1fr}.tab{flex:1}}
+
+*{
+
+    box-sizing:border-box;
+
+    margin:0;
+
+    padding:0;
+
+}
+
+body{
+
+    font-family:Arial,Helvetica,sans-serif;
+
+    min-height:100vh;
+
+    color:#fff;
+
+    background:
+
+        radial-gradient(circle at 20% 20%,rgba(0,229,255,.12),transparent 30%),
+
+        radial-gradient(circle at 80% 80%,rgba(120,80,255,.14),transparent 30%),
+
+        #050b14;
+
+}
+
+header{
+
+    text-align:center;
+
+    padding:35px 15px 15px;
+
+}
+
+.logo{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    width:58px;
+
+    height:58px;
+
+    border-radius:16px;
+
+    font-size:20px;
+
+    font-weight:900;
+
+    color:#00131a;
+
+    background:#00e5ff;
+
+    box-shadow:0 0 30px rgba(0,229,255,.45);
+
+}
+
+header h1{
+
+    margin-top:15px;
+
+    font-size:32px;
+
+}
+
+header h1 span{
+
+    color:#00e5ff;
+
+}
+
+header p{
+
+    color:#9caabd;
+
+    margin-top:8px;
+
+    font-size:15px;
+
+}
+
+.container{
+
+    width:min(1050px,94%);
+
+    margin:25px auto 50px;
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:22px;
+
+}
+
+.card{
+
+    background:rgba(13,24,39,.88);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:22px;
+
+    padding:24px;
+
+    box-shadow:0 20px 60px rgba(0,0,0,.3);
+
+    backdrop-filter:blur(12px);
+
+}
+
+.card h2{
+
+    font-size:20px;
+
+    margin-bottom:20px;
+
+}
+
+.types{
+
+    display:grid;
+
+    grid-template-columns:repeat(5,1fr);
+
+    gap:8px;
+
+    margin-bottom:20px;
+
+}
+
+.type-btn{
+
+    border:1px solid #26384c;
+
+    background:#0a1523;
+
+    color:#b7c3d1;
+
+    border-radius:12px;
+
+    padding:11px 5px;
+
+    cursor:pointer;
+
+    font-size:12px;
+
+    transition:.2s;
+
+}
+
+.type-btn:hover,
+
+.type-btn.active{
+
+    color:#00131a;
+
+    background:#00e5ff;
+
+    border-color:#00e5ff;
+
+}
+
+label{
+
+    display:block;
+
+    color:#aebccc;
+
+    font-size:13px;
+
+    margin:15px 0 7px;
+
+}
+
+input,
+
+textarea,
+
+select{
+
+    width:100%;
+
+    border:1px solid #26384c;
+
+    outline:none;
+
+    background:#081321;
+
+    color:#fff;
+
+    border-radius:12px;
+
+    padding:13px;
+
+    font-size:15px;
+
+}
+
+textarea{
+
+    min-height:110px;
+
+    resize:vertical;
+
+}
+
+input:focus,
+
+textarea:focus,
+
+select:focus{
+
+    border-color:#00e5ff;
+
+    box-shadow:0 0 0 3px rgba(0,229,255,.08);
+
+}
+
+.row{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:12px;
+
+}
+
+.color-row{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:12px;
+
+}
+
+.color-box{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    background:#081321;
+
+    border:1px solid #26384c;
+
+    border-radius:12px;
+
+    padding:8px;
+
+}
+
+input[type="color"]{
+
+    width:45px;
+
+    height:38px;
+
+    padding:2px;
+
+    border:0;
+
+    cursor:pointer;
+
+}
+
+input[type="range"]{
+
+    padding:0;
+
+    accent-color:#00e5ff;
+
+}
+
+.logo-upload{
+
+    border:1px dashed #2d435b;
+
+    border-radius:14px;
+
+    padding:15px;
+
+    text-align:center;
+
+    color:#92a3b7;
+
+    cursor:pointer;
+
+}
+
+.logo-upload input{
+
+    display:none;
+
+}
+
+.logo-upload strong{
+
+    display:block;
+
+    color:#00e5ff;
+
+    margin-bottom:5px;
+
+}
+
+.buttons{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:10px;
+
+    margin-top:20px;
+
+}
+
+button.action{
+
+    border:0;
+
+    border-radius:13px;
+
+    padding:14px;
+
+    font-size:14px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.primary{
+
+    background:#00e5ff;
+
+    color:#00131a;
+
+}
+
+.secondary{
+
+    background:#162537;
+
+    color:#fff;
+
+    border:1px solid #2a4057 !important;
+
+}
+
+button.action:hover{
+
+    transform:translateY(-2px);
+
+}
+
+.preview{
+
+    min-height:520px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+}
+
+.preview h2{
+
+    align-self:flex-start;
+
+}
+
+.qr-wrapper{
+
+    position:relative;
+
+    background:#fff;
+
+    padding:18px;
+
+    border-radius:18px;
+
+    margin:10px 0 20px;
+
+    box-shadow:0 15px 45px rgba(0,0,0,.35);
+
+}
+
+#qrcode{
+
+    line-height:0;
+
+}
+
+#qrcode img,
+
+#qrcode canvas{
+
+    display:block;
+
+}
+
+#logoPreview{
+
+    display:none;
+
+    position:absolute;
+
+    left:50%;
+
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
+    width:55px;
+
+    height:55px;
+
+    background:#fff;
+
+    padding:5px;
+
+    border-radius:10px;
+
+    object-fit:contain;
+
+}
+
+.empty{
+
+    color:#728196;
+
+    max-width:320px;
+
+    line-height:1.6;
+
+}
+
+.status{
+
+    min-height:20px;
+
+    color:#00e5ff;
+
+    font-size:13px;
+
+    margin-top:4px;
+
+}
+
+footer{
+
+    text-align:center;
+
+    padding:20px;
+
+    color:#63748a;
+
+    font-size:12px;
+
+}
+
+@media(max-width:800px){
+
+    .container{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .preview{
+
+        min-height:400px;
+
+    }
+
+}
+
+@media(max-width:500px){
+
+    header h1{
+
+        font-size:26px;
+
+    }
+
+    .card{
+
+        padding:18px;
+
+        border-radius:18px;
+
+    }
+
+    .types{
+
+        grid-template-columns:repeat(3,1fr);
+
+    }
+
+    .row,
+
+    .color-row{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .buttons{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
 </style>
+
 </head>
-<body><div class="wrap">
-<header><h1>QR Master Pro</h1><p>Create QR codes for links, text, phone, email and Wi‑Fi</p></header>
-<div class="card">
-<div class="tabs">
-<button class="tab active" data-type="url">🔗 URL</button><button class="tab" data-type="text">📝 Text</button><button class="tab" data-type="phone">📞 Phone</button><button class="tab" data-type="email">📧 Email</button><button class="tab" data-type="wifi">📶 Wi‑Fi</button>
+
+<body>
+
+<header>
+
+    <div class="logo">QR</div>
+
+    <h1>QR <span>Master Pro</span></h1>
+
+    <p>Create professional QR codes instantly — free & easy.</p>
+
+</header>
+
+<main class="container">
+
+<section class="card">
+
+<h2>⚙️ Create Your QR Code</h2>
+
+<div class="types">
+
+    <button class="type-btn active" onclick="setType('url',this)">🔗 URL</button>
+
+    <button class="type-btn" onclick="setType('text',this)">📝 Text</button>
+
+    <button class="type-btn" onclick="setType('phone',this)">📞 Phone</button>
+
+    <button class="type-btn" onclick="setType('email',this)">📧 Email</button>
+
+    <button class="type-btn" onclick="setType('wifi',this)">📶 Wi-Fi</button>
+
 </div>
-<div id="url" class="panel active"><label>Website URL</label><input id="urlInput" placeholder="https://example.com"></div>
-<div id="text" class="panel"><label>Your text</label><textarea id="textInput" placeholder="Enter any message..."></textarea></div>
-<div id="phone" class="panel"><label>Phone number</label><input id="phoneInput" placeholder="+91 9876543210"></div>
-<div id="email" class="panel"><div class="grid"><div><label>Email</label><input id="emailInput" placeholder="name@example.com"></div><div><label>Subject</label><input id="subjectInput" placeholder="Hello"></div></div><label>Message</label><textarea id="emailMsg" placeholder="Your message"></textarea></div>
-<div id="wifi" class="panel"><div class="grid"><div><label>Wi‑Fi name (SSID)</label><input id="ssid" placeholder="My WiFi"></div><div><label>Password</label><input id="pass" placeholder="Password"></div></div><label>Security</label><select id="security"><option>WPA</option><option>WEP</option><option>nopass</option></select></div>
-<div class="grid" style="margin-top:18px"><div><label>QR Color</label><input type="color" id="dark" value="#000000"></div><div><label>Background</label><input type="color" id="light" value="#ffffff"></div></div>
-<div class="actions"><button class="primary" onclick="makeQR()">Generate QR Code</button><button class="secondary" onclick="resetAll()">Clear</button></div>
-<div class="result"><div id="qr" class="qrbox"></div><br><button id="download" style="display:none" onclick="downloadQR()">⬇ Download PNG</button><button id="copy" class="copy" style="display:none" onclick="copyQR()">📋 Copy Image</button><div class="hint">Your QR is generated in your browser.</div></div>
-</div><footer>© 2026 QR Master Pro</footer></div>
+
+<div id="fields"></div>
+
+<label>QR Size</label>
+
+<input id="size" type="range" min="180" max="420" value="280"
+
+oninput="generateQR()">
+
+<div class="color-row">
+
+<div>
+
+<label>QR Color</label>
+
+<div class="color-box">
+
+<input type="color" id="qrColor" value="#000000" onchange="generateQR()">
+
+<span id="qrColorText">#000000</span>
+
+</div>
+
+</div>
+
+<div>
+
+<label>Background</label>
+
+<div class="color-box">
+
+<input type="color" id="bgColor" value="#ffffff" onchange="generateQR()">
+
+<span id="bgColorText">#ffffff</span>
+
+</div>
+
+</div>
+
+</div>
+
+<label>Logo (optional)</label>
+
+<label class="logo-upload">
+
+    <strong>＋ Add Logo</strong>
+
+    <span id="logoName">PNG / JPG image</span>
+
+    <input type="file" id="logoInput" accept="image/png,image/jpeg,image/webp">
+
+</label>
+
+<div class="buttons">
+
+    <button class="action primary" onclick="downloadPNG()">⬇ Download PNG</button>
+
+    <button class="action secondary" onclick="downloadJPG()">🖼 Download JPG</button>
+
+    <button class="action secondary" onclick="copyQR()">📋 Copy Image</button>
+
+    <button class="action secondary" onclick="clearAll()">🗑 Clear</button>
+
+</div>
+
+</section>
+
+<section class="card preview">
+
+<h2>✨ QR Preview</h2>
+
+<div class="qr-wrapper" id="qrWrapper">
+
+    <div id="qrcode"></div>
+
+    <img id="logoPreview">
+
+</div>
+
+<div class="status" id="status"></div>
+
+<p class="empty" id="emptyText">
+
+    Enter your information on the left and your QR code will appear here.
+
+</p>
+
+</section>
+
+</main>
+
+<footer>
+
+    © 2026 QR Master Pro • Free QR Code Generator
+
+</footer>
+
 <script>
-let type='url',lastData='';
-document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{type=b.dataset.type;document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));document.getElementById(type).classList.add('active')});
-function val(id){return document.getElementById(id).value.trim()}
-function getData(){if(type==='url')return val('urlInput');if(type==='text')return val('textInput');if(type==='phone')return 'tel:'+val('phoneInput');if(type==='email')return 'mailto:'+val('emailInput')+'?subject='+encodeURIComponent(val('subjectInput'))+'&body='+encodeURIComponent(val('emailMsg'));if(type==='wifi')return 'WIFI:T:'+val('security')+';S:'+val('ssid')+';P:'+val('pass')+';;'}
-function makeQR(){lastData=getData();if(!lastData||((type==='url')&&!/^https?:\/\//i.test(lastData))){alert(type==='url'?'Enter a valid URL beginning with https:// or http://.':'Please enter the required information.');return}let q=document.getElementById('qr');q.innerHTML='';new QRCode(q,{text:lastData,width:240,height:240,colorDark:val('dark'),colorLight:val('light'),correctLevel:QRCode.CorrectLevel.H});document.getElementById('download').style.display='inline-block';document.getElementById('copy').style.display='inline-block'}
-function downloadQR(){let c=document.querySelector('#qr canvas');if(!c)return;let a=document.createElement('a');a.href=c.toDataURL('image/png');a.download='qr-master-pro.png';a.click()}
-async function copyQR(){let c=document.querySelector('#qr canvas');if(!c||!navigator.clipboard||!window.ClipboardItem){alert('Image copy is not supported in this browser. Use Download PNG.');return}c.toBlob(async b=>{try{await navigator.clipboard.write([new ClipboardItem({'image/png':b})]);alert('QR image copied!')}catch(e){alert('Copy failed. Please use Download PNG.')}},'image/png')}
-function resetAll(){document.querySelectorAll('input,textarea').forEach(x=>{if(x.type!=='color')x.value=''});document.getElementById('qr').innerHTML='';document.getElementById('download').style.display='none';document.getElementById('copy').style.display='none'}
-</script></body></html>
+
+let currentType = "url";
+
+let logoImage = null;
+
+const fields = document.getElementById("fields");
+
+function setType(type,btn){
+
+    currentType = type;
+
+    document.querySelectorAll(".type-btn")
+
+        .forEach(b => b.classList.remove("active"));
+
+    btn.classList.add("active");
+
+    renderFields();
+
+    generateQR();
+
+}
+
+function renderFields(){
+
+    if(currentType === "url"){
+
+        fields.innerHTML = `
+
+        <label>Website URL</label>
+
+        <input id="mainInput" placeholder="https://example.com"
+
+        oninput="generateQR()">
+
+        `;
+
+    }
+
+    else if(currentType === "text"){
+
+        fields.innerHTML = `
+
+        <label>Your Text</label>
+
+        <textarea id="mainInput"
+
+        placeholder="Type your message here..."
+
+        oninput="generateQR()"></textarea>
+
+        `;
+
+    }
+
+    else if(currentType === "phone"){
+
+        fields.innerHTML = `
+
+        <label>Phone Number</label>
+
+        <input id="mainInput"
+
+        placeholder="+91 9876543210"
+
+        oninput="generateQR()">
+
+        `;
+
+    }
+
+    else if(currentType === "email"){
+
+        fields.innerHTML = `
+
+        <label>Email Address</label>
+
+        <input id="emailAddress"
+
+        placeholder="you@example.com"
+
+        oninput="generateQR()">
+
+        <label>Subject</label>
+
+        <input id="emailSubject"
+
+        placeholder="Email subject"
+
+        oninput="generateQR()">
+
+        <label>Message</label>
+
+        <textarea id="emailMessage"
+
+        placeholder="Your email message..."
+
+        oninput="generateQR()"></textarea>
+
+        `;
+
+    }
+
+    else if(currentType === "wifi"){
+
+        fields.innerHTML = `
+
+        <label>Wi-Fi Network Name (SSID)</label>
+
+        <input id="wifiSSID"
+
+        placeholder="My WiFi"
+
+        oninput="generateQR()">
+
+        <label>Wi-Fi Password</label>
+
+        <input id="wifiPassword"
+
+        type="password"
+
+        placeholder="Password"
+
+        oninput="generateQR()">
+
+        <label>Security</label>
+
+        <select id="wifiSecurity" onchange="generateQR()">
+
+            <option value="WPA">WPA/WPA2</option>
+
+            <option value="WEP">WEP</option>
+
+            <option value="nopass">No Password</option>
+
+        </select>
+
+        `;
+
+    }
+
+}
+
+function getData(){
+
+    if(currentType === "url"){
+
+        return document.getElementById("mainInput")?.value.trim() || "";
+
+    }
+
+    if(currentType === "text"){
+
+        return document.getElementById("mainInput")?.value || "";
+
+    }
+
+    if(currentType === "phone"){
+
+        let phone = document.getElementById("mainInput")?.value.trim() || "";
+
+        return phone ? "tel:" + phone : "";
+
+    }
+
+    if(currentType === "email"){
+
+        let email = document.getElementById("emailAddress")?.value.trim() || "";
+
+        let subject = document.getElementById("emailSubject")?.value || "";
+
+        let message = document.getElementById("emailMessage")?.value || "";
+
+        if(!email) return "";
+
+        return "mailto:" + email +
+
+        "?subject=" + encodeURIComponent(subject) +
+
+        "&body=" + encodeURIComponent(message);
+
+    }
+
+    if(currentType === "wifi"){
+
+        let ssid = document.getElementById("wifiSSID")?.value || "";
+
+        let password = document.getElementById("wifiPassword")?.value || "";
+
+        let security = document.getElementById("wifiSecurity")?.value || "WPA";
+
+        if(!ssid) return "";
+
+        return `WIFI:T:${security};S:${escapeWifi(ssid)};P:${escapeWifi(password)};;`;
+
+    }
+
+    return "";
+
+}
+
+function escapeWifi(value){
+
+    return value
+
+    .replace(/\\/g,"\\\\")
+
+    .replace(/;/g,"\\;")
+
+    .replace(/,/g,"\\,")
+
+    .replace(/:/g,"\\:");
+
+}
+
+function generateQR(){
+
+    const data = getData();
+
+    const qr = document.getElementById("qrcode");
+
+    const empty = document.getElementById("emptyText");
+
+    const status = document.getElementById("status");
+
+    qr.innerHTML = "";
+
+    const size = parseInt(document.getElementById("size").value);
+
+    document.getElementById("qrColorText").textContent =
+
+        document.getElementById("qrColor").value;
+
+    document.getElementById("bgColorText").textContent =
+
+        document.getElementById("bgColor").value;
+
+    if(!data){
+
+        empty.style.display = "block";
+
+        status.textContent = "";
+
+        document.getElementById("logoPreview").style.display = "none";
+
+        return;
+
+    }
+
+    empty.style.display = "none";
+
+    new QRCode(qr,{
+
+        text:data,
+
+        width:size,
+
+        height:size,
+
+        colorDark:document.getElementById("qrColor").value,
+
+        colorLight:document.getElementById("bgColor").value,
+
+        correctLevel:QRCode.CorrectLevel.H
+
+    });
+
+    if(logoImage){
+
+        const logo = document.getElementById("logoPreview");
+
+        logo.src = logoImage;
+
+        logo.style.display = "block";
+
+    }
+
+    status.textContent = "✓ QR code generated successfully";
+
+}
+
+document.getElementById("logoInput").addEventListener("change",function(){
+
+    const file = this.files[0];
+
+    if(!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = function(e){
+
+        logoImage = e.target.result;
+
+        document.getElementById("logoName").textContent = file.name;
+
+        generateQR();
+
+    };
+
+    reader.readAsDataURL(file);
+
+});
+
+function getCanvas(){
+
+    const original = document.querySelector("#qrcode canvas");
+
+    if(!original) return null;
+
+    const size = parseInt(document.getElementById("size").value);
+
+    const padding = 36;
+
+    const canvas = document.createElement("canvas");
+
+    canvas.width = size + padding * 2;
+
+    canvas.height = size + padding * 2;
+
+    const ctx = canvas.getContext("2d");
+
+    ctx.fillStyle = document.getElementById("bgColor").value;
+
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    ctx.drawImage(original,padding,padding,size,size);
+
+    if(logoImage){
+
+        const logo = new Image();
+
+        return new Promise(resolve => {
+
+            logo.onload = function(){
+
+                const logoSize = Math.round(size * .18);
+
+                const x = (canvas.width-logoSize)/2;
+
+                const y = (canvas.height-logoSize)/2;
+
+                ctx.fillStyle =
+
+                    document.getElementById("bgColor").value;
+
+                ctx.beginPath();
+
+                ctx.roundRect(x-7,y-7,logoSize+14,logoSize+14,10);
+
+                ctx.fill();
+
+                ctx.drawImage(
+
+                    logo,
+
+                    x,
+
+                    y,
+
+                    logoSize,
+
+                    logoSize
+
+                );
+
+                resolve(canvas);
+
+            };
+
+            logo.src = logoImage;
+
+        });
+
+    }
+
+    return Promise.resolve(canvas);
+
+}
+
+async function downloadPNG(){
+
+    const canvas = await getCanvas();
+
+    if(!canvas){
+
+        alert("Please create a QR code first.");
+
+        return;
+
+    }
+
+    const link = document.createElement("a");
+
+    link.download = "QR-Master-Pro.png";
+
+    link.href = canvas.toDataURL("image/png");
+
+    link.click();
+
+}
+
+async function downloadJPG(){
+
+    const canvas = await getCanvas();
+
+    if(!canvas){
+
+        alert("Please create a QR code first.");
+
+        return;
+
+    }
+
+    const link = document.createElement("a");
+
+    link.download = "QR-Master-Pro.jpg";
+
+    link.href = canvas.toDataURL("image/jpeg",0.95);
+
+    link.click();
+
+}
+
+async function copyQR(){
+
+    const canvas = await getCanvas();
+
+    if(!canvas){
+
+        alert("Please create a QR code first.");
+
+        return;
+
+    }
+
+    canvas.toBlob(async blob => {
+
+        try{
+
+            await navigator.clipboard.write([
+
+                new ClipboardItem({
+
+                    "image/png":blob
+
+                })
+
+            ]);
+
+            document.getElementById("status").textContent =
+
+                "✓ QR image copied to clipboard";
+
+        }catch(error){
+
+            alert("Copy is not supported by this browser.");
+
+        }
+
+    },"image/png");
+
+}
+
+function clearAll(){
+
+    fields.innerHTML = "";
+
+    logoImage = null;
+
+    document.getElementById("qrcode").innerHTML = "";
+
+    document.getElementById("logoPreview").style.display = "none";
+
+    document.getElementById("logoInput").value = "";
+
+    document.getElementById("logoName").textContent =
+
+        "PNG / JPG image";
+
+    document.getElementById("status").textContent = "";
+
+    document.getElementById("emptyText").style.display = "block";
+
+    renderFields();
+
+}
+
+renderFields();
+
+</script>
+
+</body>
+
+</html>
