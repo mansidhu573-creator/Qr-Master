@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mansidhu573-creator.github.io/Qr-Master/sitemap.xml
